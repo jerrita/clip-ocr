@@ -1,9 +1,10 @@
 import easyocr
+import pyperclip
 from PIL import ImageGrab, Image
 
 if __name__ == '__main__':
     print('Loading models...')
-    reader = easyocr.Reader(['ch_sim', 'en'], gpu='True')
+    reader = easyocr.Reader(['ch_sim', 'en'], gpu=True)
     while True:
         input('\nCopy image to your clipboard and press any key to continue: ')
         img = ImageGrab.grabclipboard()
@@ -12,6 +13,7 @@ if __name__ == '__main__':
             continue
 
         img.save('temp.png')
-        res = reader.readtext('temp.png', detail=0)
-        print(''.join(res))
+        res = ''.join(reader.readtext('temp.png', detail=0))
+        pyperclip.copy(res)
+        print(res)
 
